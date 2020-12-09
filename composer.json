@@ -2,6 +2,7 @@
   "name": "sacsi/module-add-piso-depto-attributes",
   "description": "Agrega custom attributes a Customer: piso depto",
   "type": "magento2-module",
+  "version": "100.0.7",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
