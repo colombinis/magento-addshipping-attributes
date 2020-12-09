@@ -1,6 +1,6 @@
 {
-  "name": "sacsi/magento2-customattribute",
-  "description": "Agrega 2 custom attributes a Customer: piso departamento",
+  "name": "sacsi/magento2-add-piso-depto-attributes",
+  "description": "Agrega custom attributes a Customer: piso depto",
   "type": "magento2-module",
   "license": [
     "OSL-3.0",
@@ -14,5 +14,12 @@
     "psr-4": {
       "Sacsi\\CustomAttribute\\": ""
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/colombinis/magento-addshipping-attributes.git"
+    }
+  ]
+
 }
