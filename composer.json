@@ -18,7 +18,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/colombinis/magento-addshipping-attributes.git"
+      "url": "https://github.com/colombinis/module-add-piso-depto-attributes.git"
     }
   ]
 

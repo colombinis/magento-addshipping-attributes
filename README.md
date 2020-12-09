@@ -14,7 +14,7 @@ Manually
 TODO check install/unistall with composer:
 ```
 [warning - it is not working yet]
-composer require sacsi/magento2-add-piso-depto-attributes
+composer require sacsi/module-add-piso-depto-attributes
 ```
 
 Enable the module and execute dinamic code generation
