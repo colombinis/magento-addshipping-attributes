@@ -2,6 +2,8 @@
 
 namespace Sacsi\CustomAttribute\Setup;
 
+use Magento\Eav\Model\Config;
+use Magento\Eav\Setup\EavSetup;
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
@@ -11,6 +13,21 @@ use Magento\Framework\Setup\SchemaSetupInterface;
  */
 class InstallSchema implements InstallSchemaInterface
 {
+    private $eavSetup;
+    private $eavConfig;
+
+    /**
+     * @param EavSetup
+     * @param Config
+     */
+    public function __construct(
+            EavSetup $eavSetup,
+            Config $config
+        )
+    {
+        $this->eavSetup = $eavSetup;
+        $this->eavConfig = $config;
+    }
 
     /**
      * {@inheritdoc}
