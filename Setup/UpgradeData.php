@@ -5,25 +5,10 @@ namespace Sacsi\CustomAttribute\Setup;
 use Magento\Framework\Setup\UpgradeDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Customer\Model\Customer;
-use Magento\Customer\Setup\CustomerSetupFactory;
+
 
 class UpgradeData implements UpgradeDataInterface
 {
-
-    private $customerSetupFactory;
-
-    /**
-     * Constructor
-     *
-     * @param \Magento\Customer\Setup\CustomerSetupFactory $customerSetupFactory
-     */
-    public function __construct(
-        CustomerSetupFactory $customerSetupFactory
-    ) {
-        $this->customerSetupFactory = $customerSetupFactory;
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -34,62 +19,22 @@ class UpgradeData implements UpgradeDataInterface
 
         $setup->startSetup();
 
-        if (version_compare($context->getVersion(), "1.0.3", "<")) {
-            $this->upgradeSchema103_quote_address($setup);
-            $this->upgradeSchema103_sales_order_address($setup);
+        if (version_compare($context->getVersion(), "1.0.2", "<")) {
+            $this->upgradeSchema102($setup);
         }
 
         $setup->endSetup();
     }
 
-    private function upgradeSchema103_quote_address(ModuleDataSetupInterface $setup)
+
+    private function upgradeSchema102(ModuleDataSetupInterface $setup)
     {
-        $connection = $setup->getConnection();
+        $quoteAddressTable = $setup->getTable('quote_address');
+        $setup->run("ALTER TABLE " . $quoteAddressTable . " ADD `piso` varchar(250) NOT NULL");
+        $setup->run("ALTER TABLE " . $quoteAddressTable . " ADD `dpto` varchar(250) NOT NULL");
 
-        $connection->addColumn(
-            $setup->getTable('quote_address'),
-            'piso',
-            [
-                'type' => 'text',
-                'length' => 255,
-                'comment' => 'the piso'
-            ]
-        );
-        $connection->addColumn(
-            $setup->getTable('quote_address'),
-            'dpto',
-            [
-                'type' => 'text',
-                'length' => 255,
-                'comment' => 'the dpto'
-            ]
-        );
+        $salesOrderAddressTable = $setup->getTable('sales_order_address');
+        $setup->run("ALTER TABLE " . $salesOrderAddressTable . " ADD `piso` varchar(250) NOT NULL");
+        $setup->run("ALTER TABLE " . $salesOrderAddressTable . " ADD `dpto` varchar(250) NOT NULL");
     }
-
-    private function upgradeSchema103_sales_order_address(ModuleDataSetupInterface $setup)
-    {
-        $connection = $setup->getConnection();
-
-
-        $connection->addColumn(
-            $setup->getTable('sales_order_address'),
-            'piso',
-            [
-                'type' => 'text',
-                'length' => 255,
-                'comment' => 'the piso'
-            ]
-        );
-        $connection->addColumn(
-            $setup->getTable('sales_order_address'),
-            'dpto',
-            [
-                'type' => 'text',
-                'length' => 255,
-                'comment' => 'the dpto'
-            ]
-        );
-
-    }
-
 }

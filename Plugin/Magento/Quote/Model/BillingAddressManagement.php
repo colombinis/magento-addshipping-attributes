@@ -1,13 +1,22 @@
 <?php
 namespace Sacsi\CustomAttribute\Plugin\Magento\Quote\Model;
 
+use Psr\Log\LoggerInterface;
+
 class BillingAddressManagement
 {
 
+    /**
+     * @var LoggerInterface $logger
+     */
     protected $logger;
 
+    /**
+     * BillingAddressManagement constructor.
+     * @param LoggerInterface $logger
+     */
     public function __construct(
-        \Psr\Log\LoggerInterface $logger
+        LoggerInterface $logger
     ) {
         $this->logger = $logger;
     }
@@ -27,7 +36,6 @@ class BillingAddressManagement
         if (!empty($extAttributes)) {
             try {
                 $address->setDpto($extAttributes->getDpto());
-
                 $address->setPiso($extAttributes->getPiso());
 
             } catch (\Exception $e) {

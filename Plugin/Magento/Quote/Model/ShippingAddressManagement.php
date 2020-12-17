@@ -2,12 +2,22 @@
 
 namespace Sacsi\CustomAttribute\Plugin\Magento\Quote\Model;
 
+use Psr\Log\LoggerInterface;
+
 class ShippingAddressManagement
 {
+
+    /**
+     * @var LoggerInterface $logger
+     */
     protected $logger;
 
+    /**
+     * ShippingAddressManagement constructor.
+     * @param LoggerInterface $logger
+     */
     public function __construct(
-        \Psr\Log\LoggerInterface $logger
+        LoggerInterface $logger
     ) {
         $this->logger = $logger;
     }
