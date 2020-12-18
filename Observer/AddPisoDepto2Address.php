@@ -18,25 +18,25 @@ class AddPisoDepto2Address implements ObserverInterface
         $order = $observer->getEvent()->getOrder();
         $quote = $observer->getEvent()->getQuote();
 
-        if ($quote->getBillingAddress()) {
-            $order->getBillingAddress()->setPiso($quote->getBillingAddress()->getPiso());
-            $order->getBillingAddress()->setDpto($quote->getBillingAddress()->getDpto());
-        }
+        // if ($quote->getBillingAddress()) {
+        //     $order->getBillingAddress()->setPiso($quote->getBillingAddress()->getPiso());
+        //     $order->getBillingAddress()->setDpto($quote->getBillingAddress()->getDpto());
+        // }
 
-        if (!$quote->isVirtual()) {
-            $order->getShippingAddress()->setPiso($quote->getShippingAddress()->getPiso());
-            $order->getShippingAddress()->setDpto($quote->getShippingAddress()->getDpto());
-        }
+        // if (!$quote->isVirtual()) {
+        //     $order->getShippingAddress()->setPiso($quote->getShippingAddress()->getPiso());
+        //     $order->getShippingAddress()->setDpto($quote->getShippingAddress()->getDpto());
+        // }
 
         $this->objectCopyService->copyFieldsetToTarget(
-            'sales_convert_quote_address',
+            'extra_checkout_shipping_address_fields',
             'to_order_address',
             $quote,
             $order
         );
 
         $this->objectCopyService->copyFieldsetToTarget(
-            'sales_convert_quote_address',
+            'extra_checkout_billing_address_fields',
             'to_customer_address',
             $quote,
             $order
