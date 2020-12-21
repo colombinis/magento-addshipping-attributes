@@ -15,8 +15,18 @@ class AddPisoDepto2Address implements ObserverInterface
     }
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $order = $observer->getEvent()->getOrder();
         $quote = $observer->getEvent()->getQuote();
+        $quoteBillingAddress = $quote->getBillingAddress();
+        $quoteShippingAddress_1 = $quote->getShippingAddress();
+        $quoteShippingAddress = $quote->getBillingAddress();
+
+        $order = $observer->getEvent()->getOrder();
+        $orderBillingAddress = $order->getBillingAddress();
+        $orderShippingAddress = $order->getShippingAddress();
+
+        // $saveInAddressBook = $quoteShippingAddress_1->getSaveInAddressBook() ? 1 : 0;
+        // $sameAsBilling = $quoteShippingAddress_1->getSameAsBilling() ? 1 : 0;
+        // $getPiso = $quoteShippingAddress_1->getPiso();
 
         // if ($quote->getBillingAddress()) {
         //     $order->getBillingAddress()->setPiso($quote->getBillingAddress()->getPiso());
@@ -31,16 +41,17 @@ class AddPisoDepto2Address implements ObserverInterface
         $this->objectCopyService->copyFieldsetToTarget(
             'extra_checkout_shipping_address_fields',
             'to_order_address',
-            $quote,
-            $order
+            $quoteBillingAddress,
+            $orderBillingAddress
         );
 
         $this->objectCopyService->copyFieldsetToTarget(
             'extra_checkout_billing_address_fields',
             'to_customer_address',
-            $quote,
-            $order
+            $quoteShippingAddress,
+            $orderShippingAddress
         );
+
         return $this;
     }
 

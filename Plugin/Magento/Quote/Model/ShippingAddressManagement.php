@@ -44,4 +44,21 @@ class ShippingAddressManagement
         }
         return [$cartId, $address];
     }
+
+    public function beforeSaveAddressInformation(
+        \Magento\Quote\Model\ShippingAddressManagement $subject,
+        $cartId,
+        \Magento\Checkout\Api\Data\ShippingInformationInterface $address
+    ) {
+        $extAttributes = $address->getExtensionAttributes();
+        if (!empty($extAttributes)) {
+            try {
+                $address->setDpto($extAttributes->getDpto());
+                $address->setPiso($extAttributes->getPiso());
+            } catch (\Exception $e) {
+                $this->logger->critical($e->getMessage());
+            }
+        }
+        return [$cartId, $address];
+    }
 }

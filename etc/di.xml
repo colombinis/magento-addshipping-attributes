@@ -3,6 +3,11 @@
 	<type name="Magento\Quote\Model\ShippingAddressManagement">
 		<plugin disabled="false" name="sacsi_shippingaddressmanagement" sortOrder="10" type="Sacsi\CustomAttribute\Plugin\Magento\Quote\Model\ShippingAddressManagement"/>
 	</type>
+	
+	<!-- <type name="Magento\Checkout\Model\ShippingInformationManagement">
+		<plugin disabled="false" name="sacsi_shippingaddressmanagement" sortOrder="10" type="Sacsi\CustomAttribute\Plugin\Magento\Quote\Model\ShippingAddressManagement"/>
+	</type> -->
+
 	<type name="Magento\Quote\Model\BillingAddressManagement">
 		<plugin disabled="false" name="sacsi_billingaddressmanagement" sortOrder="10" type="Sacsi\CustomAttribute\Plugin\Magento\Quote\Model\BillingAddressManagement"/>
 	</type>
