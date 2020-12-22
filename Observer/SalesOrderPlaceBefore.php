@@ -49,7 +49,7 @@ class SalesOrderPlaceBefore implements ObserverInterface
      */
     protected $_checkoutSession;
 
-    private $_addressRepository;
+    protected $_addressRepository;
 
     protected $_logger;
 
@@ -95,19 +95,19 @@ class SalesOrderPlaceBefore implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $customer               = $this->_customerSession->getCustomer();
+        //$customer               = $this->_customerSession->getCustomer();
         $order                  = $observer->getEvent()->getOrder();
         $shippingAddress        = $order->getShippingAddress();
-        $billingAddress         = $order->getBillingAddress();
+        //$billingAddress         = $order->getBillingAddress();
 
 
         //add custom attributes in user address
         if(!empty($order->getCustomerId())){
             $address = $this->_extractAddress($shippingAddress,$order->getCustomerId());
 
-            $debug_customAttr = $address->getCustomAttributes();
-            $address->setCustomAttribute('piso', $shippingAddress->getPiso());
-            $address->setCustomAttribute('dpto', $shippingAddress->getDpto());
+            //$debug_customAttr = $address->getCustomAttributes();
+            //$address->setCustomAttribute('piso', $shippingAddress->getPiso());
+            //$address->setCustomAttribute('dpto', $shippingAddress->getDpto());
 
             $this->_addressRepository->save($address);
 /*
