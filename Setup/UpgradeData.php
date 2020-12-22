@@ -87,9 +87,9 @@ class UpgradeData implements UpgradeDataInterface
             $this->add2SalesOrderAddress($setup);
         }
 
-        if (version_compare($context->getVersion(), '1.0.7', '<')) {
-            $this->updateAttributes107($setup);
-        }
+        // if (version_compare($context->getVersion(), '1.0.7', '<')) {
+        //     $this->updateAttributes107($setup);
+        // }
 
         //$indexer = $this->indexerRegistry->get(Customer::CUSTOMER_GRID_INDEXER_ID);
         //$indexer->reindexAll();
@@ -105,7 +105,7 @@ class UpgradeData implements UpgradeDataInterface
             \Magento\Customer\Api\AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
             'piso',
             [
-                'type' => 'varchar',
+                'type' => 'static',
                 'label' => 'Piso',
                 'input' => 'text',
                 'required' => false,
@@ -120,7 +120,7 @@ class UpgradeData implements UpgradeDataInterface
             \Magento\Customer\Api\AddressMetadataInterface::ENTITY_TYPE_ADDRESS,
             'dpto',
             [
-                'type' => 'varchar',
+                'type' => 'static',
                 'label' => 'Dpto',
                 'input' => 'text',
                 'required' => false,
@@ -130,7 +130,26 @@ class UpgradeData implements UpgradeDataInterface
                 'is_user_defined' => true,
             ]
         );
-        
+
+        //add columnos to customer_address_entity
+        $setup->getConnection()->addColumn(
+            $setup->getTable('customer_address_entity'),
+            'piso',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'nullable' => true,
+                'comment' => 'piso custom attribute'
+            ]
+        );
+        $setup->getConnection()->addColumn(
+            $setup->getTable('customer_address_entity'),
+            'dpto',
+            [
+                'type' => \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                'nullable' => true,
+                'comment' => 'dpto custom attribute'
+            ]
+        );
 
     }
 
@@ -180,7 +199,7 @@ class UpgradeData implements UpgradeDataInterface
             ['customer_register_address','customer_address_edit','adminhtml_customer_address']
         );
         $pisoAttribute->save();
-        
+
         $dptoAttribute = $customerSetup->getEavConfig()->getAttribute('customer_address', 'dpto');
         $dptoAttribute->setData(
             'used_in_forms',
